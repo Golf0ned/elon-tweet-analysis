@@ -1,2 +1,7 @@
 # Ignore venv
 myenv/
+
+# Ignore .env
+.env
+
+cookies.json
