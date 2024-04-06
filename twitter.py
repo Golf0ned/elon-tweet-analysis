@@ -6,7 +6,7 @@ from twikit import Client
 
 ELON = "elonmusk"
 
-class Twitter():
+class Twitter:
 
     def __init__(self):
         self.client = Client('en-US')

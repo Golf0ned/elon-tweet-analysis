@@ -3,35 +3,35 @@ main.py
 
 Conducts sentiment analysis on Elon tweet to give stock recommendations
 """
-from time import sleep
+import time
 
-import nltk
-from nltk.sentiment import SentimentIntensityAnalyzer
-
+from analyze import Analyzer
 from twitter import Twitter
 
 
-def process(body):
-    # Create a SentimentIntensityAnalyzer object
-    sia = SentimentIntensityAnalyzer()
-    sentiment_scores = sia.polarity_scores(body)
-    print(sentiment_scores)
-
-
 def main():
-    # Initialize client
+    # initialize client
     twitter = Twitter()
     twitter.login()
 
-    # start polling most reecnt tweets
-    """while(True):
-        tweets = twitter.get_tweets('@elonmusk')
+    # initialize analyzer
+    analyzer = Analyzer()
+
+    # poll every 5 min
+    while(True):
+        tweets = twitter.get_tweets()
         for tweet in tweets:
-            sentiment = process(tweet)
-        sleep(300)"""
-    tweets = twitter.get_tweets()
-    for tweet in tweets:
-        print(tweet.text)
+            # clean the data
+            tweetClean = analyzer.clean(tweet.text)
+            # get companies
+            companies = analyzer.getCompanies(tweetClean)
+            
+            # if there are companies, do sentiment analysis (python slow moment)
+            sentiment = analyzer.process(tweetClean) if companies else 0
+            
+            # TODO: do something with the daa lmaao
+
+        time.sleep(300)
 
 if __name__=="__main__": 
     main()
