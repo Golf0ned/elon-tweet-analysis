@@ -1,7 +1,6 @@
-# Ignore venv
 myenv/
+__pycache__/
 
-# Ignore .env
 .env
 
 cookies.json
