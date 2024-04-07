@@ -11,14 +11,22 @@ from twitter import Twitter
 
 def main():
     # initialize client
+    print('Logging into twitter...')
     twitter = Twitter()
     twitter.login()
+    print('Done!')
 
     # initialize analyzer
+    print('Initializing analyzer...')
     analyzer = Analyzer()
+    print('Done!')
+
+    print('Ready to blast tweets!')
+    print('------------------------------\n')
 
     # poll every 5 min
     while(True):
+        print('Getting tweets...')
         tweets = twitter.get_tweets()
         for tweet in tweets:
             # clean the data
