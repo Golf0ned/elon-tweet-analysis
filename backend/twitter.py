@@ -19,15 +19,16 @@ class Twitter:
         else:
             # load login info
             load_dotenv()
-            USERNAME = os.getenv("USERNAME")
+            TWITTERUSERNAME = os.getenv("TWITTERUSERNAME")
             EMAIL = os.getenv("EMAIL")
-            PASSWORD = os.getenv("PASSWORD")
+            TWITTERPASSWORD = os.getenv("TWITTERPASSWORD")
+            print(TWITTERUSERNAME, EMAIL, TWITTERPASSWORD)
 
             # login
             self.client.login(
-                auth_info_1=USERNAME,
+                auth_info_1=TWITTERUSERNAME,
                 auth_info_2=EMAIL,
-                password=PASSWORD
+                password=TWITTERPASSWORD
             )
 
             # save cookies to file
