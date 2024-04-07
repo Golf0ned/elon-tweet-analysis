@@ -23,6 +23,7 @@ def main():
         for tweet in tweets:
             # clean the data
             tweetClean = analyzer.clean(tweet.text)
+            print(tweetClean)
             # get companies
             companies = analyzer.get_companies(tweetClean)
             
