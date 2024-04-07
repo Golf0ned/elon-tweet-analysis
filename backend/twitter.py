@@ -1,6 +1,6 @@
 import os
 
-from dotenv import load_dotenv
+import dot_env as dotenv
 import twikit
 from twikit import Client
 
@@ -13,12 +13,13 @@ class Twitter:
 
     def login(self):
         """Login to Twitter"""
-        if os.path.exists(os.path.join(os.getcwd(), "cookies.json")):
-            # load cookies to login
-            self.client.load_cookies('cookies.json')
+        dotenv_file = dotenv.find_dotenv()
+        dotenv.load_dotenv(dotenv_file)
+        COOKIES = os.getenv("COOKIES")
+        if COOKIES:
+            self.client.load_cookies(COOKIES)
         else:
             # load login info
-            load_dotenv()
             TWITTERUSERNAME = os.getenv("TWITTERUSERNAME")
             EMAIL = os.getenv("EMAIL")
             TWITTERPASSWORD = os.getenv("TWITTERPASSWORD")
@@ -31,8 +32,13 @@ class Twitter:
                 password=TWITTERPASSWORD
             )
 
-            # save cookies to file
-            self.client.save_cookies('cookies.json')
+            # save cookies to .env
+            COOKIES = self.client.get_cookies()
+            dotenv.set_key(dotenv_file, "COOKIES", COOKIES)
+        
+        # debug logging
+        print('logged in!')
+
 
     def get_tweets(self):
         cur_user = self.client.get_user_by_screen_name(ELON)
