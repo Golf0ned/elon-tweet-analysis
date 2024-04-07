@@ -1,5 +1,5 @@
 import nltk
 
 print('Downloading nltk dependencies...')
-nltk.download()
+nltk.download('vader_lexicon')
 print('Done!')
