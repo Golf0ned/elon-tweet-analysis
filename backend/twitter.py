@@ -1,3 +1,4 @@
+import json
 import os
 
 import dotenv
@@ -17,7 +18,8 @@ class Twitter:
         dotenv.load_dotenv(dotenv_file)
         COOKIES = os.getenv("COOKIES")
         if COOKIES:
-            self.client.load_cookies(COOKIES)
+            cookies = json.load(COOKIES)
+            self.client.set_cookies(cookies)
         else:
             # load login info
             TWITTERUSERNAME = os.getenv("TWITTERUSERNAME")
