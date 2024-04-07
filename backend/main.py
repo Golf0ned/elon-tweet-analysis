@@ -24,12 +24,11 @@ def main():
             # clean the data
             tweetClean = analyzer.clean(tweet.text)
             # get companies
-            companies = analyzer.getCompanies(tweetClean)
+            companies = analyzer.get_companies(tweetClean)
             
             # if there are companies, do sentiment analysis (python slow moment)
             sentiment = analyzer.process(tweetClean) if companies else 0
             
-            # TODO: do something with the daa lmaao
 
         time.sleep(300)
 
