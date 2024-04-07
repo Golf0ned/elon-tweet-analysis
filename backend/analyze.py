@@ -28,12 +28,12 @@ class Analyzer:
         res = set()
         for entity in entities:
             if entity in self.companies:
-                res.add(entity)
+                res.add(self.companies[entity])
             else:
                 entity_words = entity.split(" ")
                 for word in entity_words:
                     if word in self.companies:
-                        res.add(word)
+                        res.add(self.companies[word])
         return res
     
     def __init_companies(self, fileName):

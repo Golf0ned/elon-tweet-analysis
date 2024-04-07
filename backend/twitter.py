@@ -41,7 +41,7 @@ class Twitter:
         print('logged in!')
 
 
-    def get_tweets(self):
+    def get_tweets(self, tweetCount):
         cur_user = self.client.get_user_by_screen_name(ELON)
-        recent_tweets = self.client.get_user_tweets(user_id=cur_user.id, tweet_type="Tweets", count=20)
+        recent_tweets = self.client.get_user_tweets(user_id=cur_user.id, tweet_type="Tweets", count=tweetCount)
         return recent_tweets
