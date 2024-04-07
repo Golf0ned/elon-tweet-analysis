@@ -1,6 +1,6 @@
 import os
 
-import dot_env as dotenv
+import dotenv
 import twikit
 from twikit import Client
 
