@@ -18,8 +18,7 @@ class Twitter:
         dotenv.load_dotenv(dotenv_file)
         COOKIES = os.getenv("COOKIES")
         if COOKIES:
-            cookies = json.load(COOKIES)
-            self.client.set_cookies(cookies)
+            self.client.set_cookies(json.loads(COOKIES))
         else:
             # load login info
             TWITTERUSERNAME = os.getenv("TWITTERUSERNAME")
@@ -35,8 +34,8 @@ class Twitter:
             )
 
             # save cookies to .env
-            COOKIES = self.client.get_cookies()
-            dotenv.set_key(dotenv_file, "COOKIES", COOKIES)
+            cookies = self.client.get_cookies()
+            dotenv.set_key(dotenv_file, "COOKIES", json.dumps(cookies))
         
         # debug logging
         print('logged in!')
