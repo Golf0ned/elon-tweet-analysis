@@ -62,11 +62,13 @@ function App() {
         <h2>Last 100 Tweets</h2>
         <div className="scrollable-container">
           <div className="scrollable-content">
-          {data ? (
-            <pre>{JSON.stringify(data, null, 2)}</pre>
-          ) : (
-            <p>Loading...</p>
-          )}
+          <div>
+            {data.map(tweet) => (
+              <div key={tweet.index}>
+                <p>{tweet.tweet}</p>
+              </div>
+            )}
+          </div>
           </div>
         </div>
       </div>
