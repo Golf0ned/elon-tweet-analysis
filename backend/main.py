@@ -29,6 +29,7 @@ def main():
             
             # if there are companies, do sentiment analysis (python slow moment)
             sentiment = analyzer.process(tweetClean) if companies else 0
+            print(f'Sentiment: {sentiment}\n\n')
             
 
         time.sleep(300)

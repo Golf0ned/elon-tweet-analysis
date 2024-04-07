@@ -1,4 +1,4 @@
-import re
+import io
 import string
 
 import emoji
@@ -9,10 +9,12 @@ class Analyzer:
     
     def __init__(self):
         self.analyzer = SentimentIntensityAnalyzer()
+        self.companies = self.__init_companies('data/cleaned_nasdaq.csv')
+        print(self.companies)
 
     def process(self, body):
         sentiment_scores = self.analyzer.polarity_scores(body)
-        print(sentiment_scores)
+        return sentiment_scores['compound']
 
     def clean(self, body):
         emojis_removed = emoji.replace_emoji(body, replace='')
@@ -23,10 +25,28 @@ class Analyzer:
     
     def get_companies(self, body):
         entities = self.__get_entities(body)
+        res = set()
         for entity in entities:
-            pass
-        return entities
+            if entity in self.companies:
+                res.add(entity)
+            else:
+                entity_words = entity.split(" ")
+                for word in entity_words:
+                    if word in self.companies:
+                        res.add(word)
+        return res
     
+    def __init_companies(self, fileName):
+        res = {}
+        prev = ''
+        with open(fileName, 'r') as inStream:
+            for row in inStream:
+                cur = row.strip().split(',')
+                if cur[1] == prev:
+                    continue
+                res[cur[1]] = cur[0]
+        return res
+
     def __get_entities(self, body):
         bodyTokenized = nltk.word_tokenize(body)
         bodyTagged = nltk.pos_tag(bodyTokenized)
@@ -41,7 +61,7 @@ class Analyzer:
             if cur:
                 named_entity = " ".join(cur)
                 if named_entity not in res:
-                    res.add(cur)
+                    res.add(named_entity)
                     cur = []
             else:
                 continue
